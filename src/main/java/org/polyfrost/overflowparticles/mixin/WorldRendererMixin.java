@@ -18,7 +18,7 @@ public abstract class WorldRendererMixin {
     private void color(float red, float green, float blue, float alpha, CallbackInfoReturnable<WorldRenderer> cir) {
         if (OverflowParticles.INSTANCE.getRendering()) {
             ParticleConfig config = ModConfig.INSTANCE.getConfig(OverflowParticles.INSTANCE.getRenderingEntity());
-            if (config != null && config.getId() != 28) {
+            if (config != null) {
                 OneColor c = config.getEntry().getColor();
                 cir.setReturnValue(this.color(UtilKt.colorInt(c.getRed(), red, config), UtilKt.colorInt(c.getGreen(), green, config), UtilKt.colorInt(c.getBlue(), blue, config), UtilKt.colorInt(c.getAlpha(), alpha, config)));
             }

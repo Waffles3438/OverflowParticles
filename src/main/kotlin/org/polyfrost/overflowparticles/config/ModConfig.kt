@@ -8,7 +8,6 @@ import club.sk1er.patcher.config.OldPatcherConfig
 import dev.isxander.particlesenhanced.config.ParticlesEnhancedConfig
 import net.minecraft.client.particle.EntityFX
 import org.polyfrost.overflowparticles.OverflowParticles
-import org.polyfrost.overflowparticles.hook.EntityFXHook
 import java.util.ArrayList
 
 object ModConfig : Config(Mod(OverflowParticles.NAME, ModType.UTIL_QOL, "/overflowparticles.svg"), "${OverflowParticles.MODID}.json") {
@@ -20,8 +19,8 @@ object ModConfig : Config(Mod(OverflowParticles.NAME, ModType.UTIL_QOL, "/overfl
     var blockSetting = BlockParticleEntry()
 
     fun getConfig(entity: EntityFX?): ParticleConfig? {
-        if (entity !is EntityFXHook) return null
-        return getConfigByID(entity.`overflowParticles$getParticleID`())
+        val id = OverflowParticles.entitiesCache[entity?.entityId] ?: return null
+        return getConfigByID(id)
     }
 
     fun getConfigByID(id: Int): ParticleConfig? {
