@@ -21,6 +21,9 @@ public class ConfigSliderMixin {
             if (Objects.equals(slider.name(), "Size")) {
                 ParticleEntry entry = (ParticleEntry) parent;
                 int id = entry.getID();
+                if (OverflowParticles.INSTANCE.getUnfair().contains(id)) {
+                    cir.setReturnValue(new ConfigSlider(field, parent, slider.name(), slider.description(), slider.category(), slider.subcategory(), slider.min(), 1f, slider.step(), slider.instant()));
+                }
             }
         }
     }

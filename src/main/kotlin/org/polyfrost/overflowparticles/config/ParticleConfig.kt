@@ -14,12 +14,21 @@ class ParticleConfig(val name: String, val id: Int) : SubConfig(name, "") {
 
     override fun initialize() {
         mod.config = this
+        if (id == 37) generateOptionList(ModConfig.blockSetting, mod.defaultPage, mod, false)
         generateOptionList(entry, mod.defaultPage, mod, false)
         ConfigCore.mods.add(this.mod)
         addDependency("color", "customColor")
         addDependency("colorMode", "customColor")
         addDependency("hideMode", "hideRunning")
+        hideIf("multiplier") { OverflowParticles.unfair.contains(id) }
         val colors = listOf("customColor", "colorMode", "color")
+        for (i in colors) {
+            hideIf(i) { id == 28 }
+        }
+        val fades = listOf("fade", "fadeStart")
+        for (i in fades) {
+            hideIf(i) { id == 0 || id == 1 || id == 2 || id == 3 }
+        }
     }
 
     override fun reInitialize() {
