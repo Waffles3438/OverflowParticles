@@ -14,7 +14,7 @@ public class Mixin_ModifyFootstepSize {
     @ModifyExpressionValue(method = "render", at = @At(value = "CONSTANT", args = "floatValue=0.125F"))
     private float overflowparticles$scale(float constant) {
         ParticleConfig config = PerParticleConfigManager.getConfig((Particle) (Object) this);
-        return constant * (config == null ? 1 : Math.min(config.getSize(), 1f));
+        return constant * (config == null ? 1 : config.getSize());
     }
 }
 *///?} else {

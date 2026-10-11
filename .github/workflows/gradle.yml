@@ -1,4 +1,4 @@
-name: Build with Gradle
+name: Build Companion with Gradle
 
 on:
   push:
@@ -45,14 +45,14 @@ jobs:
       - uses: gradle/actions/setup-gradle@v5
 
       - run: chmod +x ./gradlew
-      - name: Build Stonecutter version
+      - name: Build and test companion with original mod
         run: |
           ./gradlew ":${{ matrix.version }}:build"
 
       - name: Resolve built mod jar
         id: mod-jar
         run: |
-          mapfile -t jars < <(find "versions/${{ matrix.version }}/build/libs" -maxdepth 1 -type f -name '*.jar' ! -name '*-sources.jar' ! -name '*-dev.jar' | sort)
+          mapfile -t jars < <(find "versions/${{ matrix.version }}/build/libs" -maxdepth 1 -type f -name 'overflowparticlescompanion-*.jar' ! -name '*-sources.jar' ! -name '*-dev.jar' | sort)
 
           if [ "${#jars[@]}" -ne 1 ]; then
             printf 'Expected exactly one non-sources jar, found %s:\n' "${#jars[@]}"

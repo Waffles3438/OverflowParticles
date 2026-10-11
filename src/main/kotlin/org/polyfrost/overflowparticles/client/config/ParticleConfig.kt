@@ -53,12 +53,6 @@ class ParticleConfig(val name: String, val particleType: ParticleType<*>) {
             t.getProp("size").metadata?.set("max", 1.0f)
         }
 
-        if (particle == VanillaParticles.FOOTSTEP) {
-            map.remove("customColor")
-            map.remove("colorMode")
-            map.remove("color")
-        }
-
         if (particle.isFireworkTriggered) {
             map.remove("fade")
             map.remove("fadeStart")

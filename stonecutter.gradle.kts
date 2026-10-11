@@ -15,6 +15,13 @@ stonecutter {
                 replace("(?<![\\w.])ParticleEngine\\b", "ParticleManager", "(?<![\\w.])ParticleManager\\b", "ParticleEngine")
                 replace("(?<![\\w.])TrackingEmitter\\b", "EmitterParticle", "(?<![\\w.])EmitterParticle\\b", "TrackingEmitter")
                 replace("(?<![\\w.])ClientLevel\\b", "ClientWorld", "(?<![\\w.])ClientWorld\\b", "ClientLevel")
+                // Match Kotlin imports with either LF or CRLF line endings.
+                replace("(?m)^import net.minecraft.core.particles.ParticleType(?=\\r?$)", "import org.polyfrost.overflowparticles.utils.ParticleType", "(?m)^import org.polyfrost.overflowparticles.utils.ParticleType(?=\\r?$)", "import net.minecraft.core.particles.ParticleType")
+                replace("(?m)^import net.minecraft.core.particles.ParticleTypes(?=\\r?$)", "import net.minecraft.entity.particle.ParticleType as ParticleTypes", "(?m)^import net.minecraft.entity.particle.ParticleType as ParticleTypes(?=\\r?$)", "import net.minecraft.core.particles.ParticleTypes")
+                replace("(?m)^import net.minecraft.resources.ResourceLocation(?=\\r?$)", "import net.minecraft.resource.Identifier as ResourceLocation", "(?m)^import net.minecraft.resource.Identifier as ResourceLocation(?=\\r?$)", "import net.minecraft.resources.ResourceLocation")
+                replace("(?m)^import net.minecraft.world.entity.player.Player(?=\\r?$)", "import net.minecraft.entity.living.player.PlayerEntity as Player", "(?m)^import net.minecraft.entity.living.player.PlayerEntity as Player(?=\\r?$)", "import net.minecraft.world.entity.player.Player")
+                replace("(?m)^import net.minecraft.network.protocol.Packet(?=\\r?$)", "import net.minecraft.network.packet.Packet", "(?m)^import net.minecraft.network.packet.Packet(?=\\r?$)", "import net.minecraft.network.protocol.Packet")
+                replace("(?m)^import net.minecraft.network.protocol.game.ClientboundEntityEventPacket(?=\\r?$)", "import net.minecraft.network.packet.s2c.play.EntityEventS2CPacket as ClientboundEntityEventPacket", "(?m)^import net.minecraft.network.packet.s2c.play.EntityEventS2CPacket as ClientboundEntityEventPacket(?=\\r?$)", "import net.minecraft.network.protocol.game.ClientboundEntityEventPacket")
             }
             string(eval(current.version, "= 1.8.9")) {
                 replace(
@@ -44,30 +51,6 @@ stonecutter {
                 replace(
                     "net.minecraft.server.Bootstrap",
                     "net.minecraft.Bootstrap"
-                )
-                replace(
-                    "import net.minecraft.core.particles.ParticleType\n",
-                    "import org.polyfrost.overflowparticles.utils.ParticleType\n"
-                )
-                replace(
-                    "import net.minecraft.core.particles.ParticleTypes\n",
-                    "import net.minecraft.entity.particle.ParticleType as ParticleTypes\n"
-                )
-                replace(
-                    "import net.minecraft.resources.ResourceLocation\n",
-                    "import net.minecraft.resource.Identifier as ResourceLocation\n"
-                )
-                replace(
-                    "import net.minecraft.world.entity.player.Player\n",
-                    "import net.minecraft.entity.living.player.PlayerEntity as Player\n"
-                )
-                replace(
-                    "import net.minecraft.network.protocol.Packet\n",
-                    "import net.minecraft.network.packet.Packet\n"
-                )
-                replace(
-                    "import net.minecraft.network.protocol.game.ClientboundEntityEventPacket\n",
-                    "import net.minecraft.network.packet.s2c.play.EntityEventS2CPacket as ClientboundEntityEventPacket\n"
                 )
             }
         }

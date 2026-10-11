@@ -29,4 +29,4 @@ stonecutter {
     }
 }
 
-rootProject.name = "OverflowParticles"
+rootProject.name = "OverflowParticlesCompanion"

@@ -1,0 +1,22 @@
+{
+    "schemaVersion": 1,
+    "id": "overflowparticlescompanion",
+    "name": "OverflowParticles Companion",
+    "version": "${mod_version}",
+    "description": "Additional footstep and block particle customization for OverflowParticles.",
+    "authors": ["Waffles3438"],
+    "contact": {
+        "sources": "https://github.com/Waffles3438/OverflowParticles",
+        "issues": "https://github.com/Waffles3438/OverflowParticles/issues"
+    },
+    "license": "GPL-3.0-only",
+    "environment": "client",
+    "mixins": ["mixins.overflowparticlescompanion.json"],
+    "depends": {
+        "minecraft": "${mc_version}",
+        "fabricloader": ">=${loader_version}",
+        "overflowparticles": "=${upstream_version}",
+        "oneconfigv1": ">=1.4.0",
+        "fabric-language-kotlin": ">=1.13.8+kotlin.2.3.0"
+    }
+}

@@ -13,7 +13,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import net.minecraft.client.particle.Particle;
 import org.polyfrost.overflowparticles.client.config.ParticleConfig;
 import org.polyfrost.overflowparticles.client.config.PerParticleConfigManager;
-import org.polyfrost.overflowparticles.client.particles.VanillaParticles;
 import org.polyfrost.overflowparticles.client.utils.ParticleSpawner;
 import org.polyfrost.compose.render.PolyColor;
 import org.spongepowered.asm.mixin.Mixin;
@@ -154,7 +153,7 @@ public abstract class Mixin_ApplyCustomParticleColors {
     @Unique
     private static float overflowparticles$adjust(Particle particle, float original, ToIntFunction<PolyColor> pick) {
         ParticleConfig config = PerParticleConfigManager.getConfig(particle);
-        if (config == null || !config.getCustomColor() || config.getParticleType() == VanillaParticles.FOOTSTEP.getId()) {
+        if (config == null || !config.getCustomColor()) {
             return original;
         }
 
