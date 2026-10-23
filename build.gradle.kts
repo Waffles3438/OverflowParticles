@@ -31,51 +31,6 @@ group = sc.properties.get<String>("mod.group")
 version = "$modversion+$mcversion"
 base.archivesName = modid
 
-stonecutter {
-    constants["fabric"] = true
-    constants["forge"] = false
-    constants["neoforge"] = false
-    constants["forge_like"] = false
-}
-
-// Keep the former fork available for reference, but never compile or ship its classes.
-// Stonecutter's public file processor lets the companion use an isolated source tree.
-fun companionSources(sourceSet: String) = tasks.register("generateCompanion${sourceSet.replaceFirstChar { it.uppercase() }}") {
-    val sourceRoot = rootProject.file("companion/src/$sourceSet")
-    val outputRoot = layout.buildDirectory.dir("generated/companion/$sourceSet")
-    inputs.dir(sourceRoot)
-    inputs.file(rootProject.file("stonecutter.gradle.kts"))
-    inputs.property("minecraftVersion", mcversion)
-    outputs.dir(outputRoot)
-    doLast {
-        val target = outputRoot.get().asFile.canonicalFile
-        check(target.toPath().startsWith(layout.buildDirectory.get().asFile.canonicalFile.toPath()))
-        // Only clear this task's generated files so removed sources cannot survive in a jar.
-        delete(target)
-        sourceRoot.walkTopDown().filter { it.isFile && it.extension in setOf("java", "kt") }.forEach { source ->
-            val relative = source.relativeTo(sourceRoot).invariantSeparatorsPath
-            stonecutter.process(source, "build/generated/companion/$sourceSet/$relative")
-        }
-    }
-}
-val companionMain = companionSources("main")
-val companionTest = companionSources("test")
-sourceSets {
-    main {
-        java.setSrcDirs(listOf(companionMain.map { layout.buildDirectory.dir("generated/companion/main/java").get() }))
-        kotlin.setSrcDirs(emptyList<String>())
-        resources.setSrcDirs(listOf(rootProject.file("companion/src/main/resources")))
-    }
-    test {
-        java.setSrcDirs(emptyList<String>())
-        kotlin.setSrcDirs(listOf(companionTest.map { layout.buildDirectory.dir("generated/companion/test/kotlin").get() }))
-        resources.setSrcDirs(listOf(rootProject.file("companion/src/test/resources")))
-    }
-}
-tasks.named("compileJava") { dependsOn(companionMain) }
-tasks.named("compileTestKotlin") { dependsOn(companionTest) }
-tasks.matching { it.name == "sourcesJar" }.configureEach { dependsOn(companionMain) }
-
 repositories {
     mavenCentral()
     google()
@@ -101,7 +56,6 @@ dependencies {
             mappings("net.ornithemc:feather-gen2:$mcversion+build.${sc.properties["feather_build"] as String}:v2") {
                 containsUnpick()
             }
-            mappings(rootProject.file("mappings/feather-overrides.tiny"))
         })
         testCompileOnly("net.ornithemc.osl-gen2:entrypoints:${sc.properties["deps.osl_entrypoints"] as String}")
     } else {
@@ -123,7 +77,7 @@ dependencies {
 }
 
 loom {
-    fabricModJsonPath = rootProject.file("companion/src/main/resources/fabric.mod.json")
+    fabricModJsonPath = rootProject.file("src/main/resources/fabric.mod.json")
     runConfigs.all {
         preferGradleTask = true
         generateRunConfig = true

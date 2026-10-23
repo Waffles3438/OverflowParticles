@@ -41,8 +41,7 @@ Supported targets: Ornithe 1.8.9; Fabric 1.21.1, 1.21.4, 1.21.5, 1.21.8, 1.21.10
 
 ## Source layout
 
-- `companion/src/main`: the companion's mixins, small helpers, and mod metadata.
-- `companion/src/test`: tests against the actual published original mod.
-- `src/main` and `src/ducks`: preserved fork sources for reference. They are excluded from compilation and packaging.
+- `src/main`: the companion's mixins, small helpers, and mod metadata.
+- `src/test`: tests against the actual published original mod.
 
-The build uses Stonecutter's public file processor to generate isolated companion sources for each Minecraft version. Only classes in `org.waffles.overflowparticlescompanion` are packaged.
+Stonecutter processes these sources for each Minecraft version. Only classes in `org.waffles.overflowparticlescompanion` are packaged.
